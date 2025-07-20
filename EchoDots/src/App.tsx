@@ -4,7 +4,7 @@ function App() {
 
   return (
     <>
-      <h1>Welcome to EchoDots</h1>
+      <h1 className="text-3x1 font-bold underline">Welcome to EchoDots</h1>
     </>
   )
 }
