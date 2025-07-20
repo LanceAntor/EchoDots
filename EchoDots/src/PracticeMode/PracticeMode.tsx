@@ -10,13 +10,30 @@ const morseMap: Record<string, string> = {
 };
 
 // Simple beep sound generator for Morse code
-function playMorse(morse: string) {
+interface PlayMorseFn {
+  (morse: string): void;
+  ctx?: AudioContext;
+  currentOscs?: OscillatorNode[];
+}
+const playMorse: PlayMorseFn = function(morse: string) {
   const win = window as Window & typeof globalThis & { webkitAudioContext?: typeof AudioContext };
-  const ctx = new (win.AudioContext || win.webkitAudioContext!)();
+  // Use a persistent context so only one sound plays at a time
+  if (!playMorse.ctx) {
+    playMorse.ctx = new (win.AudioContext || win.webkitAudioContext!)();
+  }
+  const ctx = playMorse.ctx!;
+  // Stop any currently playing sound
+  if (playMorse.currentOscs && playMorse.currentOscs.length > 0) {
+    playMorse.currentOscs.forEach((osc) => {
+      try { osc.stop(); } catch { /* ignore */ }
+    });
+  }
+  playMorse.currentOscs = [];
   let time = ctx.currentTime;
   morse.split("").forEach((char) => {
+    let osc: OscillatorNode | null = null;
     if (char === ".") {
-      const osc = ctx.createOscillator();
+      osc = ctx.createOscillator();
       osc.type = "sine";
       osc.frequency.value = 700;
       osc.connect(ctx.destination);
@@ -24,7 +41,7 @@ function playMorse(morse: string) {
       osc.stop(time + 0.15);
       time += 0.2;
     } else if (char === "-") {
-      const osc = ctx.createOscillator();
+      osc = ctx.createOscillator();
       osc.type = "sine";
       osc.frequency.value = 700;
       osc.connect(ctx.destination);
@@ -32,17 +49,36 @@ function playMorse(morse: string) {
       osc.stop(time + 0.45);
       time += 0.5;
     }
+    if (osc) playMorse.currentOscs!.push(osc);
     time += 0.05;
   });
 }
+playMorse.ctx = undefined;
+playMorse.currentOscs = [];
 
 const PracticeMode: React.FC = () => {
   const [selected, setSelected] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // Helper to calculate total duration of morse code
+  function getMorseDuration(morse: string) {
+    let duration = 0;
+    morse.split("").forEach((char) => {
+      if (char === ".") duration += 0.2;
+      else if (char === "-") duration += 0.5;
+      duration += 0.05;
+    });
+    return duration;
+  }
 
   const handleSelect = (letter: string) => {
+    if (isPlaying) return;
     setSelected(letter);
+    setIsPlaying(true);
     playMorse(morseMap[letter]);
+    const duration = getMorseDuration(morseMap[letter]);
+    setTimeout(() => setIsPlaying(false), duration * 1000);
   };
 
   return (
@@ -83,6 +119,7 @@ const PracticeMode: React.FC = () => {
                 onClick={() => handleSelect(letter)}
                 onMouseEnter={() => setHovered(letter)}
                 onMouseLeave={() => setHovered(null)}
+                disabled={isPlaying}
               >
                 {letter}
               </button>
@@ -109,6 +146,7 @@ const PracticeMode: React.FC = () => {
                 onClick={() => handleSelect(letter)}
                 onMouseEnter={() => setHovered(letter)}
                 onMouseLeave={() => setHovered(null)}
+                disabled={isPlaying}
               >
                 {letter}
               </button>
