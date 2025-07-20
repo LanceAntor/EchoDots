@@ -60,6 +60,7 @@ const PracticeMode: React.FC = () => {
   const [selected, setSelected] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [playBtnHovered, setPlayBtnHovered] = useState(false);
 
   // Helper to calculate total duration of morse code
   function getMorseDuration(morse: string) {
@@ -84,7 +85,7 @@ const PracticeMode: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#5d8662] flex flex-col items-center px-4 py-8 font-['Lexend']">
       <button
-        className="absolute top-8 left-8 text-4xl text-[#d9d9d9] font-bold"
+        className="absolute top-8 left-15 text-6xl text-[#d9d9d9] font-bold"
         onClick={() => window.history.back()}
         aria-label="Back"
       >
@@ -98,8 +99,8 @@ const PracticeMode: React.FC = () => {
       >
         Practice Mode
       </h1>
-      <div className="flex flex-col gap-2 justify-center items-center mb-4">
-        <div className="flex gap-4">
+      <div className="flex flex-col gap-4 justify-center items-center mb-4">
+        <div className="flex gap-4 justify-center w-full">
           {Object.keys(morseMap).slice(0, 13).map((letter) => {
             const isSelected = selected === letter;
             const isHovered = hovered === letter;
@@ -126,7 +127,7 @@ const PracticeMode: React.FC = () => {
             );
           })}
         </div>
-        <div className="flex gap-4 mt-2">
+        <div className="flex gap-4 justify-center w-full mt-2">
           {Object.keys(morseMap).slice(13).map((letter) => {
             const isSelected = selected === letter;
             const isHovered = hovered === letter;
@@ -161,8 +162,12 @@ const PracticeMode: React.FC = () => {
         Summary
       </button>
       <div
-        className="w-full max-w-3xl border-4 border-[#d9d9b0] rounded-xl flex flex-col items-center justify-center mx-auto py-12 mb-4"
-        style={{ background: "rgba(0,0,0,0.03)" }}
+        className="border-5 border-[#d9d9b0] rounded-xl flex flex-col items-center justify-center py-12 padding-0 margin-0"
+        style={{ 
+          background: "rgba(0,0,0,0.03)", 
+          maxWidth: "65%",
+          width: "100%",
+        }}
       >
         <div className="flex items-center justify-center w-full">
           <div className="flex-1 text-center text-6xl text-[#fff] font-bold">
@@ -180,11 +185,36 @@ const PracticeMode: React.FC = () => {
           </div>
         </div>
         <button
-          className="mt-8 px-6 py-2 rounded-xl bg-[#eaeaea] text-[#222] text-xl font-bold flex items-center gap-2"
-          onClick={() => selected && playMorse(morseMap[selected])}
+          className={`mt-20 px-6 py-2 rounded-xl border-2 border-[#d9d9b0] text-xl font-bold flex items-center gap-2 transition-all duration-150
+            ${playBtnHovered ? 'bg-[#d9d9b0] text-[#222] shadow-lg' : 'bg-[transparent] text-[#222]'}
+            ${!selected ? 'opacity-60 cursor-not-allowed' : ''}`}
+          onClick={() => {
+            if (!selected) return;
+            if (!isPlaying) {
+              setIsPlaying(true);
+              playMorse(morseMap[selected]);
+              const duration = getMorseDuration(morseMap[selected]);
+              setTimeout(() => setIsPlaying(false), duration * 1000);
+            } else {
+              // Pause: stop all oscillators
+              if (playMorse.currentOscs && playMorse.currentOscs.length > 0) {
+                playMorse.currentOscs.forEach((osc) => {
+                  try { osc.stop(); } catch { /* ignore */ }
+                });
+                playMorse.currentOscs = [];
+              }
+              setIsPlaying(false);
+            }
+          }}
+          onMouseEnter={() => setPlayBtnHovered(true)}
+          onMouseLeave={() => setPlayBtnHovered(false)}
           disabled={!selected}
+          style={{ minWidth: "140px" }}
         >
-          <span style={{ fontSize: "1.5em" }}>▶</span> Play
+          <span style={{ fontSize: "1rem" }}>
+            {isPlaying ? '⏸' : '▶'}
+          </span>
+          {isPlaying ? 'Pause' : 'Play'}
         </button>
       </div>
     </div>
