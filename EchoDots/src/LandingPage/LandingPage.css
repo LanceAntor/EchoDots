@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'lexend', Arial, sans-serif;
+  height: 100%;
+  width: 100%;
+  background: #5d8662;
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  box-sizing: border-box;
+
+}
+.landing-content{
+    margin-left: 100px;
+    margin-top: -100px;
+}
+
+@media (min-width: 768px) {
+  .landing-container {
+    flex-direction: row;
+    gap: 48px;
+    padding: 40px 64px 0 64px;
+  }
+}
+
+.landing-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.landing-title {
+  font-size: 6rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0px 1px 0px #9c9c9c,
+               0px 2px 0px #9c9c9c,
+               0px 3px 0px #9c9c9c,
+               0px 4px 0px #9c9c9c,
+               0px 20px 5px rgba(0,0,0,0.2);
+  margin-bottom: 0.5rem;
+}
+
+.landing-subtitle {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #fff;
+  margin-top: -10px;
+  text-shadow: 0px 1px 0px #9c9c9c,
+               0px 2px 0px #9c9c9c,
+               0px 3px 0px #9c9c9c,
+               0px 4px 0px #9c9c9c,
+               0px 20px 5px rgba(0,0,0,0.2);
+  margin-bottom: 3.5rem;
+}
+
+.landing-desc {
+  color: #eaeaea;
+  font-size: 1.05rem;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  
+}
+
+.landing-btn {
+  padding: 12px 32px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: 2px solid #fff;
+  background: #5d8662;
+  color: #fff;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.13);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.landing-btn:hover {
+  background: #73946B;
+  color: #5d8662;
+  border: 2px solid #fff;
+}
+
+.landing-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mascot-img {
+  width: 580px;
+  max-width: 90%;
+  border-radius: 30px;
+  margin-left: -120px;
+  margin-top: -50px;
+}
+
+@media (max-width: 767px) {
+  .mascot-img {
+    width: 220px;
+    margin-left: 0;
+    margin-top: 24px;
+  }
+}
+
+.landing-footer {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  width: 100vw;
+  text-align: center;
+  color: #eaeaea;
+  font-size: 0.85rem;
+}
