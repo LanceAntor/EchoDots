@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./Levels.module.css";
 
 const levels = [
-  { title: "Dot Sprout", subtitle: "Beginner" },
-  { title: "Signal Starter", subtitle: "Novice" },
-  { title: "Pulse Operator", subtitle: "Skilled" },
-  { title: "Echo Decoder", subtitle: "Expert" },
-  { title: "Code Commander", subtitle: "Master" },
+  { title: ["Dot", "Sprout"], subtitle: "Beginner" },
+  { title: ["Signal", "Starter"], subtitle: "Novice" },
+  { title: ["Pulse", "Operator"], subtitle: "Skilled" },
+  { title: ["Echo", "Decoder"], subtitle: "Expert" },
+  { title: ["Code", "Commander"], subtitle: "Master" },
 ];
 
 const Levels: React.FC = () => {
@@ -23,16 +23,24 @@ const Levels: React.FC = () => {
       <div className={styles["levels-grid"]}>
         <div className={styles["levels-row"]}>
           {levels.slice(0, 3).map((level) => (
-            <div className={styles["level-card"]} key={level.title}>
-              <div className={styles["level-title"]}>{level.title}</div>
+            <div className={styles["level-card"]} key={level.title.join("-")}>
+              <div className={styles["level-title"]}>
+                {level.title.map((line, idx) => (
+                  <div key={idx}>{line}</div>
+                ))}
+              </div>
               <div className={styles["level-subtitle"]}>{level.subtitle}</div>
             </div>
           ))}
         </div>
         <div className={styles["levels-row"]}>
           {levels.slice(3).map((level) => (
-            <div className={styles["level-card"]} key={level.title}>
-              <div className={styles["level-title"]}>{level.title}</div>
+            <div className={styles["level-card"]} key={level.title.join("-")}>
+              <div className={styles["level-title"]}>
+                {level.title.map((line, idx) => (
+                  <div key={idx}>{line}</div>
+                ))}
+              </div>
               <div className={styles["level-subtitle"]}>{level.subtitle}</div>
             </div>
           ))}
