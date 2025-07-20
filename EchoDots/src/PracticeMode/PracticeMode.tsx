@@ -85,14 +85,17 @@ const PracticeMode: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#5d8662] flex flex-col items-center px-4 py-8 font-['Lexend']">
       <button
-        className="absolute top-8 left-15 text-6xl text-[#d9d9d9] font-bold"
+        className={`absolute top-8 left-15 text-6xl font-bold transition-all duration-150 text-[#d9d9d9] px-4 py-2`}
         onClick={() => window.history.back()}
         aria-label="Back"
+        style={{ cursor: 'pointer', background: 'transparent', border: 'none' }}
+        onMouseEnter={e => { e.currentTarget.querySelector('span')!.style.color = '#000000ff'; }}
+        onMouseLeave={e => { e.currentTarget.querySelector('span')!.style.color = '#d9d9d9'; }}
       >
-        ←
+        <span style={{ color: '#d9d9d9', transition: 'color 0.2s' }}>←</span>
       </button>
       <h1
-        className="text-[#d9d9d9] text-5xl font-bold mb-8 text-center tracking-wider"
+        className="text-[#d9d9d9] text-5xl font-bold mt-7 mb-8 text-center tracking-wider"
         style={{
           textShadow: "0 6px 16px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.18)",
         }}
