@@ -57,6 +57,7 @@ const ModeSelection: React.FC = () => {
             e.currentTarget.style.transform = "none";
             e.currentTarget.style.boxShadow = "0 12px 18px rgba(0,0,0,0.28)";
           }}
+          onClick={() => window.location.href = "/Levels"}
         >
           Test Your<br />Skils
         </button>
