@@ -158,12 +158,6 @@ const PracticeMode: React.FC = () => {
           })}
         </div>
       </div>
-      <button
-        className="text-2xl font-bold text-[#fff] border-2 border-[#d9d9b0] rounded-xl px-6 py-2 bg-transparent mb-6"
-        style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.10)" }}
-      >
-        Summary
-      </button>
       <div
         className="border-5 border-[#d9d9b0] rounded-xl flex flex-col items-center justify-center py-12 padding-0 margin-0"
         style={{ 
