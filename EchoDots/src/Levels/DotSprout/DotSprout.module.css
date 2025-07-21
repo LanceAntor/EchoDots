@@ -74,12 +74,6 @@
   font-family: 'Lexend', sans-serif;
   overflow: hidden;
 }
-.container {
-  /* ...existing code... */
-  height: 100%;
-  max-height: calc(100vh - 8rem);
-  overflow: hidden;
-}
 .backArrow {
   position: absolute;
   top: 2rem;
@@ -101,7 +95,7 @@
   color: #d9d9d9;
   font-size: 3rem;
   font-weight: bold;
-  margin-top: 3.5rem;
+  margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   text-align: center;
   letter-spacing: 0.08em;
@@ -135,7 +129,7 @@
   background: rgba(0,0,0,0.04);
   box-sizing: border-box;
   justify-content: flex-start;
-  height: 100%;
+  height: 90%;
   overflow: hidden;
 }
 .morseBoxInner {
@@ -225,7 +219,7 @@
   background: rgba(0,0,0,0.04);
   box-sizing: border-box;
   justify-content: flex-start;
-  height: 100%;
+  height: 90%;
   overflow: hidden;
 }
 .lettersGrid {
@@ -234,6 +228,13 @@
   gap: 1.1rem;
   width: 100%;
   justify-items: center;
+  max-height: 100%;
+  overflow-y: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none; /* Firefox */
+}
+.lettersGrid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 .letterBtn {
   font-size: 1.5rem;
