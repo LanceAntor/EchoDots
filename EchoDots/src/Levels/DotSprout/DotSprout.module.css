@@ -129,7 +129,7 @@
   background: rgba(0,0,0,0.04);
   box-sizing: border-box;
   justify-content: flex-start;
-  height: 90%;
+  height: 100%;
   overflow: hidden;
 }
 .morseBoxInner {
@@ -219,34 +219,32 @@
   background: rgba(0,0,0,0.04);
   box-sizing: border-box;
   justify-content: flex-start;
-  height: 90%;
+  height: 100%;
   overflow: hidden;
 }
 .lettersGrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 1.1rem;
+  gap: .5rem;
   width: 100%;
   justify-items: center;
-  max-height: 100%;
-  overflow-y: auto;
-  padding-bottom: 0.5rem;
-  scrollbar-width: none; /* Firefox */
-}
-.lettersGrid::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
 }
 .letterBtn {
   font-size: 1.5rem;
   font-weight: bold;
-  border: 3px solid #d9d9b0;
-  border-radius: 1em;
+  border: 3.5px solid #d9d9b0;
+  border-radius: 0.7em;
   padding: 0.75rem 1.5rem;
   background: transparent;
   color: #fff;
   transition: all 0.15s;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
   cursor: pointer;
+}
+.letterBtn:hover, .letterBtn:focus {
+  background: #b2bfa3;
+  color: #222;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
 }
 .letterBtnSelected {
   background: #d9d9b0;
