@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Levels.module.css";
 
 const levels = [
@@ -10,6 +11,7 @@ const levels = [
 ];
 
 const Levels: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles["levels-bg"]}>
       <button
@@ -22,11 +24,16 @@ const Levels: React.FC = () => {
       <h1 className={styles["levels-title"]}>Test Your skills</h1>
       <div className={styles["levels-grid"]}>
         <div className={styles["levels-row"]}>
-          {levels.slice(0, 3).map((level) => (
-            <div className={styles["level-card"]} key={level.title.join("-")}>
+          {levels.slice(0, 3).map((level, idx) => (
+            <div
+              className={styles["level-card"]}
+              key={level.title.join("-")}
+              onClick={idx === 0 ? () => navigate("/DotSprout") : undefined}
+              style={idx === 0 ? { cursor: "pointer" } : {}}
+            >
               <div className={styles["level-title"]}>
-                {level.title.map((line, idx) => (
-                  <div key={idx}>{line}</div>
+                {level.title.map((line, idx2) => (
+                  <div key={idx2}>{line}</div>
                 ))}
               </div>
               <div className={styles["level-subtitle"]}>{level.subtitle}</div>
