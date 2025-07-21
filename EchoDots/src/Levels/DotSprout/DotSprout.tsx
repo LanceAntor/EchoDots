@@ -94,6 +94,14 @@ const DotSprout: React.FC = () => {
     }
   }, [showSelection]);
 
+  // Play sound automatically when challengeLetter changes (not on initial selection modal)
+  useEffect(() => {
+    if (challengeLetter && !showSelection) {
+      setTimeout(() => handlePlay(), 200); // slight delay for UX
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [challengeLetter]);
+
   function randomizeChallenge() {
     const idx = Math.floor(Math.random() * letters.length);
     setChallengeLetter(letters[idx]);
