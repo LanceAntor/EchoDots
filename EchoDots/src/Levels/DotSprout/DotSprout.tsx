@@ -124,6 +124,7 @@ const DotSprout: React.FC = () => {
       // Last question, show result then finish
       if (letter === challengeLetter) {
         setResult("correct");
+        setCorrectCount((c) => c + 1);
         setTimeout(() => {
           setResult(null);
           setQuizDone(true);
@@ -140,6 +141,7 @@ const DotSprout: React.FC = () => {
       // Not last question
       if (letter === challengeLetter) {
         setResult("correct");
+        setCorrectCount((c) => c + 1);
       } else {
         setResult("wrong");
         setLastAnswer(challengeLetter);
@@ -160,11 +162,11 @@ const DotSprout: React.FC = () => {
           <div className={styles.modalBox}>
             <div style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '2.2rem', textAlign: 'center' }}>Selection Mode</div>
             <div style={{ display: 'flex', gap: '2.5rem', marginBottom: '2.5rem', justifyContent: 'center' }}>
-              <button className={styles.selectBtn} onClick={() => { setQuestionLimit(10); setShowSelection(false); setQuestionCount(1); setQuizDone(false); }}>10 Letters</button>
-              <button className={styles.selectBtn} onClick={() => { setQuestionLimit(20); setShowSelection(false); setQuestionCount(1); setQuizDone(false); }}>20 Letters</button>
+              <button className={styles.selectBtn} onClick={() => { setQuestionLimit(10); setShowSelection(false); setQuestionCount(1); setQuizDone(false); setCorrectCount(0); }}>10 Letters</button>
+              <button className={styles.selectBtn} onClick={() => { setQuestionLimit(20); setShowSelection(false); setQuestionCount(1); setQuizDone(false); setCorrectCount(0); }}>20 Letters</button>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <button className={styles.selectBtn} style={{ minWidth: 220 }} onClick={() => { setQuestionLimit(30); setShowSelection(false); setQuestionCount(1); setQuizDone(false); }}>30 Letters</button>
+              <button className={styles.selectBtn} style={{ minWidth: 220 }} onClick={() => { setQuestionLimit(30); setShowSelection(false); setQuestionCount(1); setQuizDone(false); setCorrectCount(0); }}>30 Letters</button>
             </div>
           </div>
         </div>
