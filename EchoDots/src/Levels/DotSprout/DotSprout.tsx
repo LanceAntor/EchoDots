@@ -72,7 +72,7 @@ const DotSprout: React.FC = () => {
   const [lastAnswer, setLastAnswer] = useState<string | null>(null);
   const [showSelection, setShowSelection] = useState(true);
   const [questionLimit, setQuestionLimit] = useState<number | null>(null);
-  const [questionCount, setQuestionCount] = useState(0);
+  const [questionCount, setQuestionCount] = useState(1);
   const [quizDone, setQuizDone] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
 
@@ -120,14 +120,13 @@ const DotSprout: React.FC = () => {
   function handleSelect(letter: string) {
     if (isPlaying) return;
     setSelected(letter);
-    if (questionLimit && questionCount + 1 >= questionLimit) {
+    if (questionLimit && questionCount >= questionLimit) {
       // Last question, show result then finish
       if (letter === challengeLetter) {
         setResult("correct");
         setTimeout(() => {
           setResult(null);
           setQuizDone(true);
-          setCorrectCount((c) => c + 1);
         }, 2000);
       } else {
         setResult("wrong");
@@ -141,21 +140,15 @@ const DotSprout: React.FC = () => {
       // Not last question
       if (letter === challengeLetter) {
         setResult("correct");
-        setTimeout(() => {
-          setResult(null);
-          setQuestionCount((c) => c + 1);
-          setCorrectCount((c) => c + 1);
-          randomizeChallenge();
-        }, 2000);
       } else {
         setResult("wrong");
         setLastAnswer(challengeLetter);
-        setTimeout(() => {
-          setResult(null);
-          setQuestionCount((c) => c + 1);
-          randomizeChallenge();
-        }, 2000);
       }
+      setTimeout(() => {
+        setResult(null);
+        setQuestionCount((c) => c + 1);
+        randomizeChallenge();
+      }, 2000);
     }
   }
 
@@ -167,11 +160,11 @@ const DotSprout: React.FC = () => {
           <div className={styles.modalBox}>
             <div style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '2.2rem', textAlign: 'center' }}>Selection Mode</div>
             <div style={{ display: 'flex', gap: '2.5rem', marginBottom: '2.5rem', justifyContent: 'center' }}>
-              <button className={styles.selectBtn} onClick={() => { setQuestionLimit(10); setShowSelection(false); setQuestionCount(0); setQuizDone(false); }}>10 Letters</button>
-              <button className={styles.selectBtn} onClick={() => { setQuestionLimit(20); setShowSelection(false); setQuestionCount(0); setQuizDone(false); }}>20 Letters</button>
+              <button className={styles.selectBtn} onClick={() => { setQuestionLimit(10); setShowSelection(false); setQuestionCount(1); setQuizDone(false); }}>10 Letters</button>
+              <button className={styles.selectBtn} onClick={() => { setQuestionLimit(20); setShowSelection(false); setQuestionCount(1); setQuizDone(false); }}>20 Letters</button>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <button className={styles.selectBtn} style={{ minWidth: 220 }} onClick={() => { setQuestionLimit(30); setShowSelection(false); setQuestionCount(0); setQuizDone(false); }}>30 Letters</button>
+              <button className={styles.selectBtn} style={{ minWidth: 220 }} onClick={() => { setQuestionLimit(30); setShowSelection(false); setQuestionCount(1); setQuizDone(false); }}>30 Letters</button>
             </div>
           </div>
         </div>
@@ -216,7 +209,31 @@ const DotSprout: React.FC = () => {
       >
         <span className={styles.arrow}>←</span>
       </button>
-      <h1 className={styles.title}>Dot Sprout</h1>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', marginBottom: '0.5rem' }}>
+        <h1 className={styles.title} style={{ marginRight: '1.5rem', marginBottom: 0 }}>Dot Sprout</h1>
+        {questionLimit && (
+          <div style={{
+            position: 'absolute',
+            left: 590,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            background: 'rgba(0,0,0,0.08)',
+            border: '4px solid #d9d9b0',
+            borderRadius: '3em',
+            padding: '0.3em 1.2em',
+            fontSize: '2rem',
+            color: '#fff',
+            fontWeight: 500,
+            textAlign: 'center',
+            fontFamily: 'Lexend, sans-serif',
+            letterSpacing: '0.04em',
+          }}>
+            <div>{questionCount}</div>
+            <div style={{ borderBottom: '2px solid #fff', width: '2em', margin: '0.1em auto 0.1em auto' }}></div>
+            <div>{questionLimit}</div>
+          </div>
+        )}
+      </div>
       <div className={styles.subtitle}>Choose the letter that matches the signal by tapping one of the buttons below.</div>
       <div className={styles.grid}>
         {/* Morse code display */}
