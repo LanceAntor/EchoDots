@@ -61,6 +61,7 @@ const PracticeMode: React.FC = () => {
   const [hovered, setHovered] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playBtnHovered, setPlayBtnHovered] = useState(false);
+  const [advanceBtnHovered, setAdvanceBtnHovered] = useState(false);
 
   // Helper to calculate total duration of morse code
   function getMorseDuration(morse: string) {
@@ -83,10 +84,22 @@ const PracticeMode: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#5d8662] flex flex-col items-center px-4 py-8 font-['Lexend']">
+    <div
+      className="min-h-screen bg-[#5d8662] flex flex-col items-center px-4 py-8 font-['Lexend']"
+      style={{
+        height: '100vh',
+        overflow: 'hidden',
+        ...(
+          // preserve any other inline styles if present
+          typeof window !== 'undefined' && window.innerWidth < 640
+            ? { paddingLeft: 0, paddingRight: 0 }
+            : {}
+        )
+      }}
+    >
       <button
         className={`absolute top-8 left-15 text-6xl font-bold transition-all duration-150 text-[#d9d9d9] px-4 py-2`}
-        onClick={() => window.history.back()}
+        onClick={() => window.location.href = "/ModeSelection"}
         aria-label="Back"
         style={{ cursor: 'pointer', background: 'transparent', border: 'none' }}
         onMouseEnter={e => { e.currentTarget.querySelector('span')!.style.color = '#000000ff'; }}
@@ -102,7 +115,7 @@ const PracticeMode: React.FC = () => {
       >
         Practice Mode
       </h1>
-      <div className="flex flex-col gap-4 justify-center items-center mb-4">
+      <div className="flex flex-col gap-1 justify-center items-center mb-4">
         <div className="flex gap-4 justify-center w-full">
           {Object.keys(morseMap).slice(0, 13).map((letter) => {
             const isSelected = selected === letter;
@@ -130,7 +143,9 @@ const PracticeMode: React.FC = () => {
             );
           })}
         </div>
-        <div className="flex gap-4 justify-center w-full mt-2">
+        <div className="flex justify-center w-full mt-2 " style={{
+            gap: '15px',
+        }}>
           {Object.keys(morseMap).slice(13).map((letter) => {
             const isSelected = selected === letter;
             const isHovered = hovered === letter;
@@ -162,8 +177,9 @@ const PracticeMode: React.FC = () => {
         className="border-5 border-[#d9d9b0] rounded-xl flex flex-col items-center justify-center py-12 padding-0 margin-0"
         style={{ 
           background: "rgba(0,0,0,0.03)", 
-          maxWidth: "65%",
+          maxWidth: "72%",
           width: "100%",
+          height: "340px",
         }}
       >
         <div className="flex items-center justify-center w-full">
@@ -182,7 +198,7 @@ const PracticeMode: React.FC = () => {
           </div>
         </div>
         <button
-          className={`mt-20 px-6 py-2 rounded-xl border-2 border-[#d9d9b0] text-xl font-bold flex items-center gap-2 transition-all duration-150
+          className={`mt-7 px-6 py-2 rounded-xl border-2 border-[#d9d9b0] text-xl font-bold flex items-center gap-2 transition-all duration-150
             ${playBtnHovered ? 'bg-[#d9d9b0] text-[#222] shadow-lg' : 'bg-[transparent] text-[#222]'}
             ${!selected ? 'opacity-60 cursor-not-allowed' : ''}`}
           onClick={() => {
@@ -214,6 +230,29 @@ const PracticeMode: React.FC = () => {
           {isPlaying ? 'Pause' : 'Play'}
         </button>
       </div>
+      <span
+        style={{
+          display: "inline-block",
+          marginTop: "15px",
+          marginBottom: "1.5rem",
+          color: advanceBtnHovered ? "#222" : "#fff",
+          fontSize: "1.2rem",
+          fontWeight: 600,
+          cursor: "pointer",
+          fontFamily: "Lexend, sans-serif",
+          borderRadius: "8px",
+          padding: "0.4em 1.2em",
+          transition: "all 0.18s"
+        }}
+        onClick={() => window.location.href = "/AdvanceMode"}
+        onMouseEnter={() => setAdvanceBtnHovered(true)}
+        onMouseLeave={() => setAdvanceBtnHovered(false)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') window.location.href = "/AdvanceMode"; }}
+      >
+        {"Advance Mode >"}
+      </span>
     </div>
   );
 };
