@@ -28,8 +28,14 @@ const Levels: React.FC = () => {
             <div
               className={styles["level-card"]}
               key={level.title.join("-")}
-              onClick={idx === 0 ? () => navigate("/DotSprout") : undefined}
-              style={idx === 0 ? { cursor: "pointer" } : {}}
+              onClick={
+              idx === 0
+                ? () => navigate("/DotSprout")
+                : idx === 1
+                ? () => navigate("/SignalStarter")
+                : undefined
+              }
+              style={idx === 0 || idx === 1 ? { cursor: "pointer" } : {}}
             >
               <div className={styles["level-title"]}>
                 {level.title.map((line, idx2) => (

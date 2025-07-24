@@ -5,9 +5,12 @@ import './styles.css'
 import LandingPage from './LandingPage/LandingPage'
 import ModeSelection from './ModeSelection/ModeSelection'
 import PracticeMode from './PracticeMode/PracticeMode'
+import AdvanceMode from './PracticeMode/AdvanceMode'
+
+// Levels
 import Levels from './Levels/Levels'
 import DotSprout from './Levels/DotSprout/DotSprout'
-import AdvanceMode from './PracticeMode/AdvanceMode'
+import SignalStarter from './Levels/SignalStarter/SignalStarter'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -19,6 +22,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/Levels" element={<Levels />} />
         <Route path="/DotSprout" element={<DotSprout />} />
         <Route path="/AdvanceMode" element={<AdvanceMode />} />
+        <Route path="/SignalStarter" element={<SignalStarter />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
