@@ -33,9 +33,11 @@ const Levels: React.FC = () => {
                 ? () => navigate("/DotSprout")
                 : idx === 1
                 ? () => navigate("/SignalStarter")
+                : idx === 2
+                ? () => navigate("/PulseOperator")
                 : undefined
               }
-              style={idx === 0 || idx === 1 ? { cursor: "pointer" } : {}}
+              style={idx === 0 || idx === 1 || idx === 2 ? { cursor: "pointer" } : {}}
             >
               <div className={styles["level-title"]}>
                 {level.title.map((line, idx2) => (
@@ -48,13 +50,37 @@ const Levels: React.FC = () => {
         </div>
         <div className={styles["levels-row"]}>
           {levels.slice(3).map((level) => (
-            <div className={styles["level-card"]} key={level.title.join("-")}>
+            <div
+              className={`${styles["level-card"]} ${styles["level-locked"]}`}
+              key={level.title.join("-")}
+              style={{
+                cursor: "not-allowed",
+                opacity: 0.5,
+                position: "relative"
+              }}
+              aria-disabled="true"
+            >
               <div className={styles["level-title"]}>
-                {level.title.map((line, idx) => (
-                  <div key={idx}>{line}</div>
+                {level.title.map((line, idx2) => (
+                  <div key={idx2}>{line}</div>
                 ))}
               </div>
               <div className={styles["level-subtitle"]}>{level.subtitle}</div>
+              <span
+                style={{
+                  position: "absolute",
+                  top: "16px",
+                  right: "16px",
+                  fontSize: "2rem",
+                  color: "#bdbdbd",
+                  fontWeight: "bold",
+                  pointerEvents: "none",
+                  userSelect: "none"
+                }}
+                aria-label="Locked"
+              >
+                🔒
+              </span>
             </div>
           ))}
         </div>

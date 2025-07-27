@@ -11,6 +11,7 @@ import AdvanceMode from './PracticeMode/AdvanceMode'
 import Levels from './Levels/Levels'
 import DotSprout from './Levels/DotSprout/DotSprout'
 import SignalStarter from './Levels/SignalStarter/SignalStarter'
+import PulseOperator from './Levels/PulseOperator/PulseOperator'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/DotSprout" element={<DotSprout />} />
         <Route path="/AdvanceMode" element={<AdvanceMode />} />
         <Route path="/SignalStarter" element={<SignalStarter />} />
+        <Route path="/PulseOperator" element={<PulseOperator />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

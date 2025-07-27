@@ -136,7 +136,8 @@ const SignalStarter: React.FC = () => {
       >
         ←
       </button>
-      <h1 style={{ color: "#d9d9d9", fontSize: "3rem", fontWeight: 700, marginTop: 24, marginBottom: 24, textAlign: "center", letterSpacing: "0.08em", textShadow: "0 6px 16px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.18)" }}>Signal Starter</h1>
+      <h1 style={{ color: "#d9d9d9", fontSize: "3rem", fontWeight: 700, marginTop: 26, textAlign: "center", letterSpacing: "0.08em", textShadow: "0 6px 16px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.18)" }}>Signal Starter</h1>
+      <h1 style={{ color: "#d9d9d9", fontSize: "1rem", fontWeight: 500, marginTop: 5, marginBottom: 24, textAlign: "center", letterSpacing: "0.08em", textShadow: "0 6px 16px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.18)" }}>Type the correct morse code base on the given letter.</h1>
       <div style={{
         width: 900, maxWidth: "95vw", height: 350, background: "transparent", border: "5px solid #e6e9c2", borderRadius: 18, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative"
       }}>
