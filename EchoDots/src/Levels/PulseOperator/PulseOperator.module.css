@@ -1,0 +1,272 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background: #56725d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Lexend, sans-serif;
+  position: relative;
+}
+
+.backButton {
+  position: absolute;
+  left: 40px;
+  top: 40px;
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  color: #d9d9d9;
+  cursor: pointer;
+}
+
+.title {
+  color: #d9d9d9;
+  font-size: 4rem;
+  font-weight: bold;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  letter-spacing: 0.08em;
+  text-shadow: 0 6px 16px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.18);
+}
+
+.subtitle {
+  color: #d9d9d9;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 4.5rem;
+  text-align: center;
+  letter-spacing: 0.08em;
+  text-shadow: 0 6px 16px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.18);
+}
+
+.playRow {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: .5rem;
+}
+
+.playButton {
+  padding: 0.4em 1.5em;
+  border-radius: 1em;
+  border: none;
+  background: #fff;
+  color: #222;
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: Lexend, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: all 0.18s;
+}
+.playButtonHover {
+  background: #e6e6b0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+
+.inputRow {
+  width: 90%;
+  max-width: 900px;
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.inputBox {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  border: 5px solid #e6e6b0;
+  border-radius: 1em;
+  background: transparent;
+  padding: 0.5em 1.2em;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: Lexend, sans-serif;
+  position: relative;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: Lexend, sans-serif;
+  width: 100%;
+  padding-left: 0.2em;
+}
+
+.submitButton {
+  margin-left: -4px;
+  padding: 0.5em 1.4em;
+  border-radius: 1em;
+  border: 5px solid #e6e6b0;
+  background: transparent;
+  color: #222;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: Lexend, sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  transition: all 0.18s;
+}
+.submitButtonHover {
+  background: #e6e6b0;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.32);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectionModal {
+  width: 42%;
+  min-height: 320px;
+  background: #6d8a6d;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 32px 32px 32px;
+  position: relative;
+  text-align: center;
+}
+
+.selectionTitle {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 2.2rem;
+}
+
+.selectionRow {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.selectionButton {
+  width: 220px;
+  height: 170px;
+  background: #7fa37a;
+  color: #fff;
+  font-weight: bold;
+  font-size: 2rem;
+  border-radius: 18px;
+  border: 2px solid #222;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  display: block;
+}
+
+.resultModal {
+  min-width: 320px;
+  min-height: 180px;
+  background: #8aa784;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 32px 32px 32px;
+  position: relative;
+  text-align: center;
+}
+
+.resultTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 1.2rem;
+}
+
+.resultLabel {
+  font-size: 1.4rem;
+  color: #222;
+  margin-bottom: 1.2rem;
+}
+
+.resultAnswer {
+  font-size: 2rem;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.finishedModal {
+  min-width: 420px;
+  min-height: 320px;
+  background: #6d8a6d;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 32px 32px 32px;
+  position: relative;
+  text-align: center;
+}
+
+.finishedTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 2.2rem;
+}
+
+.finishedScore {
+  font-size: 4rem;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 2.2rem;
+  line-height: 1.1;
+}
+
+.finishedDivider {
+  border-bottom: 4px solid #fff;
+  width: 80px;
+  margin: 0.2em auto 0.2em auto;
+}
+
+.selectButton {
+  margin-top: 1.5rem;
+  padding: 0.7em 2.5em;
+  border-radius: 1em;
+  border: 2px solid #222;
+  background: #7fa37a;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: Lexend, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  transition: background 0.18s;
+}
+.selectButtonHover {
+  background: #e6e6b0;
+}
