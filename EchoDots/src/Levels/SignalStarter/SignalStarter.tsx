@@ -62,12 +62,7 @@ const SignalStarter: React.FC = () => {
   }
 
   // Stop all beeps (for modal/finished)
-  function stopBeep() {
-    if (audioCtxRef && audioCtxRef.state === "running") {
-      audioCtxRef.close();
-      win._signalStarterAudioCtx = undefined;
-    }
-  }
+  // (removed duplicate stopBeep definition, see useCallback below)
 
   // Selection mode handler
   const handleModeSelect = (count: number) => {
@@ -135,9 +130,16 @@ const SignalStarter: React.FC = () => {
   };
 
   // Stop beep on modal or finished
+  const stopBeep = React.useCallback(() => {
+    if (audioCtxRef && audioCtxRef.state === "running") {
+      audioCtxRef.close();
+      win._signalStarterAudioCtx = undefined;
+    }
+  }, [audioCtxRef, win]);
+
   React.useEffect(() => {
     if (modal || finished) stopBeep();
-  }, [modal, finished]);
+  }, [modal, finished, stopBeep]);
 
   return (
     <div style={{ width: "100vw", height: "100vh", background: "#56725d", display: "flex", flexDirection: "column", alignItems: "center", fontFamily: "Lexend, sans-serif", position: 'relative' }}>
@@ -255,14 +257,14 @@ const SignalStarter: React.FC = () => {
             background: "transparent",
             border: "5px solid #e6e6b0",
             borderRadius: "50%",
-            width: 170,
-            height: 170,
+            width: 110,
+            height: 110,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
             fontWeight: "bold",
-            fontSize: "3rem",
+            fontSize: "1.5rem",
             color: "#fff",
             zIndex: 10,
           }}
