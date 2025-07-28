@@ -20,6 +20,16 @@ function textToMorse(text: string) {
     .join(" ");
 }
 
+// Fisher-Yates shuffle
+function shuffle<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 // Morse code sound player
 let audioCtx: AudioContext | null = null;
 let currentOscs: OscillatorNode[] = [];
@@ -60,28 +70,60 @@ function playMorse(morse: string) {
   });
 }
 
-function getRandomWord() {
-  return words[Math.floor(Math.random() * words.length)];
-}
-
 const PulseOperator: React.FC = () => {
-  const [currentWord, setCurrentWord] = useState(getRandomWord());
+  const [mode, setMode] = useState<null | number>(null);
+  const [wordList, setWordList] = useState<string[]>([]);
+  const [currentIdx, setCurrentIdx] = useState(0);
   const [input, setInput] = useState("");
   const [result, setResult] = useState<null | boolean>(null);
   const [playHovered, setPlayHovered] = useState(false);
   const [submitHovered, setSubmitHovered] = useState(false);
+  const [finished, setFinished] = useState(false);
+
+  // Open selection modal at start
+  React.useEffect(() => {
+    if (mode === null) {
+      setInput("");
+      setResult(null);
+      setFinished(false);
+      setCurrentIdx(0);
+    }
+  }, [mode]);
+
+  const handleModeSelect = (count: number) => {
+    // Shuffle and pick count words
+    const shuffled = shuffle(words).slice(0, count);
+    setWordList(shuffled);
+    setCurrentIdx(0);
+    setMode(count);
+    setInput("");
+    setResult(null);
+    setFinished(false);
+
+    // Play Morse code for the first word immediately after mode selection
+    setTimeout(() => {
+      playMorse(textToMorse(shuffled[0]));
+    },
+    100); // Short delay to ensure UI updates first
+  };
 
   const handlePlay = () => {
-    playMorse(textToMorse(currentWord));
+    if (wordList.length > 0 && currentIdx < wordList.length) {
+      playMorse(textToMorse(wordList[currentIdx]));
+    }
   };
 
   const handleSubmit = () => {
-    if (input.trim().toUpperCase() === currentWord) {
+    if (input.trim().toUpperCase() === wordList[currentIdx]) {
       setResult(true);
       setTimeout(() => {
         setResult(null);
         setInput("");
-        setCurrentWord(getRandomWord());
+        if (currentIdx + 1 < wordList.length) {
+          setCurrentIdx(currentIdx + 1);
+        } else {
+          setFinished(true);
+        }
       }, 1200);
     } else {
       setResult(false);
@@ -90,6 +132,15 @@ const PulseOperator: React.FC = () => {
         setInput("");
       }, 2000);
     }
+  };
+
+  const handleRestart = () => {
+    setMode(null);
+    setWordList([]);
+    setCurrentIdx(0);
+    setInput("");
+    setResult(null);
+    setFinished(false);
   };
 
   return (
@@ -105,6 +156,110 @@ const PulseOperator: React.FC = () => {
         position: "relative",
       }}
     >
+      {/* Selection Mode Modal */}
+      {mode === null && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.32)",
+            zIndex: 1000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              width: "42%",
+              minHeight: 320,
+              background: "#6d8a6d",
+              borderRadius: 18,
+              boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "36px 32px 32px 32px",
+              position: "relative",
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "2.2rem",
+                fontWeight: "bold",
+                color: "#fff",
+                marginBottom: "2.2rem",
+              }}
+            >
+              Selection Mode
+            </div>
+            <div style={{ display: "flex", gap: "2.5rem", marginBottom: "2.5rem" }}>
+              <button
+                style={{
+                  width: 220,
+                  height: 170,
+                  background: "#7fa37a",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: "2rem",
+                  borderRadius: "18px",
+                  border: "2px solid #222",
+                  cursor: "pointer",
+                  transition: "background 0.18s, box-shadow 0.18s",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
+                }}
+                onClick={() => handleModeSelect(5)}
+              >
+                5 Words
+              </button>
+              <button
+                style={{
+                  width: 220,
+                  height: 170,
+                  background: "#7fa37a",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: "2rem",
+                  borderRadius: "18px",
+                  border: "2px solid #222",
+                  cursor: "pointer",
+                  transition: "background 0.18s, box-shadow 0.18s",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
+                }}
+                onClick={() => handleModeSelect(10)}
+              >
+                10 Words
+              </button>
+            </div>
+            <button
+              style={{
+                width: 220,
+                height: 170,
+                background: "#7fa37a",
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "2rem",
+                borderRadius: "18px",
+                border: "2px solid #222",
+                cursor: "pointer",
+                transition: "background 0.18s, box-shadow 0.18s",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
+                display: "block",
+                margin: "0 auto"
+              }}
+              onClick={() => handleModeSelect(20)}
+            >
+              20 Words
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Back Arrow */}
       <button
         style={{
@@ -128,7 +283,7 @@ const PulseOperator: React.FC = () => {
           color: "#d9d9d9",
           fontSize: "4rem",
           fontWeight: "bold",
-          marginTop: "1.7rem",
+          marginTop: "2rem",
           marginBottom: "1rem",
           textAlign: "center",
           letterSpacing: "0.08em",
@@ -151,115 +306,122 @@ const PulseOperator: React.FC = () => {
         Listen closely to the Morse signal sequence.
       </h1>
       {/* Play Button */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 900,
-          display: "flex",
-          justifyContent: "flex-end",
-          marginBottom: "1.5rem",
-        }}
-      >
-        <button
-          style={{
-            padding: "0.4em 1.5em",
-            borderRadius: "1em",
-            border: "none",
-            background: playHovered ? "#e6e6b0" : "#fff",
-            color: playHovered ? "#222" : "#222",
-            fontSize: "1.3rem",
-            fontWeight: 700,
-            fontFamily: "Lexend, sans-serif",
-            cursor: "pointer",
-            boxShadow: playHovered ? "0 4px 16px rgba(0,0,0,0.18)" : "0 2px 8px rgba(0,0,0,0.10)",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5em",
-            transition: "all 0.18s"
-          }}
-          onClick={handlePlay}
-          onMouseEnter={() => setPlayHovered(true)}
-          onMouseLeave={() => setPlayHovered(false)}
-        >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <circle cx="11" cy="11" r="11" fill="#222" />
-            <polygon points="9,7 16,11 9,15" fill="#fff" />
-          </svg>
-          Play
-        </button>
-      </div>
-      {/* Input Box */}
-      <div
-        style={{
-          width: "90%",
-          maxWidth: 900,
-          display: "flex",
-          alignItems: "center",
-          marginTop: "0.5rem",
-        }}
-      >
+      {mode !== null && !finished && (
         <div
           style={{
-            flex: 1,
+            width: "100%",
+            maxWidth: 900,
             display: "flex",
-            alignItems: "center",
-            border: "5px solid #e6e6b0",
-            borderRadius: "1em",
-            background: "transparent",
-            padding: "0.5em 1.2em",
-            fontSize: "2rem",
-            fontWeight: 700,
-            color: "#fff",
-            fontFamily: "Lexend, sans-serif",
-            position: "relative",
+            justifyContent: "flex-end",
+            marginBottom: ".5rem",
           }}
         >
-          <input
-            type="text"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            placeholder="Input Text"
+          <button
             style={{
-              background: "transparent",
+              padding: "0.4em 1.5em",
+              borderRadius: "1em",
               border: "none",
-              outline: "none",
+              background: playHovered ? "#e6e6b0" : "#fff",
+              color: playHovered ? "#222" : "#222",
+              fontSize: "1.3rem",
+              fontWeight: 700,
+              fontFamily: "Lexend, sans-serif",
+              cursor: "pointer",
+              boxShadow: playHovered ? "0 4px 16px rgba(0,0,0,0.18)" : "0 2px 8px rgba(0,0,0,0.10)",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5em",
+              transition: "all 0.18s"
+            }}
+            onClick={handlePlay}
+            onMouseEnter={() => setPlayHovered(true)}
+            onMouseLeave={() => setPlayHovered(false)}
+          >
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="11" fill="#222" />
+              <polygon points="9,7 16,11 9,15" fill="#fff" />
+            </svg>
+            Play
+          </button>
+        </div>
+      )}
+      {/* Input Box */}
+      {mode !== null && !finished && (
+        <div
+          style={{
+            width: "90%",
+            maxWidth: 900,
+            display: "flex",
+            alignItems: "center",
+            marginTop: "0.5rem",
+          }}
+        >
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              border: "5px solid #e6e6b0",
+              borderRadius: "1em",
+              background: "transparent",
+              padding: "0.5em 1.2em",
+              fontSize: "2rem",
+              fontWeight: 700,
               color: "#fff",
+              fontFamily: "Lexend, sans-serif",
+              position: "relative",
+            }}
+          >
+            <input
+              type="text"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              placeholder="Input Text"
+              style={{
+                background: "transparent",
+                border: "none",
+                outline: "none",
+                color: "#fff",
+                fontSize: "2rem",
+                fontWeight: 700,
+                fontFamily: "Lexend, sans-serif",
+                width: "100%",
+                paddingLeft: "0.2em",
+              }}
+              autoFocus
+              onKeyDown={e => {
+                if (e.key === "Enter") handleSubmit();
+              }}
+            />
+          </div>
+          <button
+            style={{
+              marginLeft: "-4px",
+              padding: "0.5em 1.4em",
+              borderRadius: "1em",
+              border: "5px solid #e6e6b0",
+              background: submitHovered ? "#e6e6b0" : "transparent",
+              color: "#222",
               fontSize: "2rem",
               fontWeight: 700,
               fontFamily: "Lexend, sans-serif",
-              width: "100%",
-              paddingLeft: "0.2em",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              transition: "all 0.18s"
             }}
-            autoFocus
-          />
+            onClick={handleSubmit}
+            onMouseEnter={() => setSubmitHovered(true)}
+            onMouseLeave={() => setSubmitHovered(false)}
+          >
+            <svg width="48" height="48" viewBox="0 0 36 36" fill="none">
+              <path d="M6 18L30 6L24 30L18 24L6 18Z" stroke="#222" strokeWidth="3" fill="none" />
+            </svg>
+          </button>
         </div>
-        <button
-          style={{
-            marginLeft: "-4px",
-            padding: "0.5em 1.4em",
-            borderRadius: "1em",
-            border: "5px solid #e6e6b0",
-            background: submitHovered ? "#e6e6b0" : "transparent",
-            color: "#222",
-            fontSize: "2rem",
-            fontWeight: 700,
-            fontFamily: "Lexend, sans-serif",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100%",
-            transition: "all 0.18s"
-          }}
-          onClick={handleSubmit}
-          onMouseEnter={() => setSubmitHovered(true)}
-          onMouseLeave={() => setSubmitHovered(false)}
-        >
-          <svg width="48" height="48" viewBox="0 0 36 36" fill="none">
-            <path d="M6 18L30 6L24 30L18 24L6 18Z" stroke="#222" strokeWidth="3" fill="none" />
-          </svg>
-        </button>
-      </div>
+      )}
       {/* Result Modal */}
       {result !== null && (
         <div
@@ -322,10 +484,74 @@ const PulseOperator: React.FC = () => {
                     letterSpacing: "0.12em",
                   }}
                 >
-                  {currentWord}
+                  {wordList[currentIdx]}
                 </div>
               </>
             )}
+          </div>
+        </div>
+      )}
+      {/* Finished Modal */}
+      {finished && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.32)",
+            zIndex: 1000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              minWidth: 320,
+              minHeight: 180,
+              background: "#8aa784",
+              borderRadius: 18,
+              boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "36px 32px 32px 32px",
+              position: "relative",
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "2.5rem",
+                fontWeight: "bold",
+                color: "#222",
+                marginBottom: "1.2rem",
+              }}
+            >
+              Finished!
+            </div>
+            <button
+              style={{
+                marginTop: "1.5rem",
+                padding: "0.7em 2.5em",
+                borderRadius: "1em",
+                border: "none",
+                background: "#e6e6b0",
+                color: "#222",
+                fontSize: "1.5rem",
+                fontWeight: 700,
+                fontFamily: "Lexend, sans-serif",
+                cursor: "pointer",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
+                transition: "background 0.18s"
+              }}
+              onClick={handleRestart}
+            >
+              Restart
+            </button>
           </div>
         </div>
       )}
