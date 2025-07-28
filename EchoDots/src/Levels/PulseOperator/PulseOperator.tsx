@@ -267,6 +267,33 @@ const PulseOperator: React.FC = () => {
           </button>
         </div>
       )}
+      {/* Progress Counter */}
+      {mode !== null && !finished && (
+        <div
+          style={{
+            position: "absolute",
+            top: 24,
+            right: 130,
+            background: "transparent",
+            border: "3px solid #e6e6b0",
+            borderRadius: "50%",
+            width: 120,
+            height: 120,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            fontWeight: "bold",
+            fontSize: "2rem",
+            color: "#fff",
+            zIndex: 10,
+          }}
+        >
+          <div>{currentIdx + 1}</div>
+          <div style={{ borderBottom: '2px solid #fff', width: '2em', margin: '0.1em auto 0.1em auto' }}></div>
+          <div>{mode}</div>
+        </div>
+      )}
       {/* Result Modal */}
       {result !== null && (
         <div className={styles.modalOverlay} onClick={() => setResult(null)}>

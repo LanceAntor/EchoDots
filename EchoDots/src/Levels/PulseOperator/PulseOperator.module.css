@@ -35,7 +35,7 @@
   color: #d9d9d9;
   font-size: 1rem;
   font-weight: bold;
-  margin-bottom: 4.5rem;
+  margin-bottom: 6.5rem;
   text-align: center;
   letter-spacing: 0.08em;
   text-shadow: 0 6px 16px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.18);
@@ -43,10 +43,11 @@
 
 .playRow {
   width: 100%;
-  max-width: 900px;
+  max-width: 1250px;
   display: flex;
   justify-content: flex-end;
   margin-bottom: .5rem;
+
 }
 
 .playButton {
@@ -72,7 +73,7 @@
 
 .inputRow {
   width: 90%;
-  max-width: 900px;
+  max-width: 1250px;
   display: flex;
   align-items: center;
   margin-top: 0.5rem;
