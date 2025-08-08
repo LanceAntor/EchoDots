@@ -1,6 +1,6 @@
 # Echo Dots
 
-Echo Dots is a fast-paced Morse code action game where players decode signals, race against the clock, and climb the global leaderboard. Designed for both casual learners and competitive codebreakers, Echo Dots features dynamic difficulty, multiple game modes, and real-time online scoring powered by Firebase.
+Echo Dots is a fast-paced Morse code game where players decode signals, race against time, and sharpen their skills. Featuring dynamic difficulty and multiple game modes, it’s built for both casual learners and competitive codebreakers.
 
 ## Visual Demo
 
