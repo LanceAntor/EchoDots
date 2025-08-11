@@ -9,6 +9,11 @@ Echo Dots is a fast-paced Morse code game where players decode signals, race aga
 ![Home Screen Screenshot](EchoDots/src/assets/screenshot/home.png)
 *Echo Dots home screen with leaderboard and game start options*
 
+### Tutorial Mode
+![Basic Mode](EchoDots/src/assets/screenshot/tutorial1.png)
+![Advanced Mode](EchoDots/src/assets/screenshot/tutorial2.png)
+*Step-by-step tutorial screens guiding new players through Morse code basics, game mechanics, and advanced strategies*
+
 ### Gameplay
 ![Dot Sprout](EchoDots/src/assets/screenshot/game1.png)
 ![Signal Starter](EchoDots/src/assets/screenshot/game2.png)
