@@ -1,12 +1,9 @@
 # Echo Dots
 
-Echo Dots is a fast-paced Morse code action game where players decode signals, race against the clock, and climb the global leaderboard. Designed for both casual learners and competitive codebreakers, Echo Dots features dynamic difficulty, multiple game modes, and real-time online scoring powered by Firebase.
+Echo Dots is a fast-paced Morse code game where players decode signals, race against time, and sharpen their skills. Featuring dynamic difficulty and multiple game modes, it’s built for both casual learners and competitive codebreakers.
 
 ## Visual Demo
 
-### Loading Screen
-![Loading Screen](EchoDots/src/assets/screenshot/loading_screen.png)
-*Echo Dots loading screen*
 
 ### Home Screen
 ![Home Screen Screenshot](EchoDots/src/assets/screenshot/menu.png)
@@ -15,10 +12,6 @@ Echo Dots is a fast-paced Morse code action game where players decode signals, r
 ### Gameplay
 ![Gameplay Screenshot](EchoDots/src/assets/screenshot/gameplay.png)
 *In-game action showing Morse code playback and user input*
-
-### Leaderboard
-![Leaderboard Screenshot](EchoDots/src/assets/screenshot/leaderboard.png)
-*Global leaderboard with online scores and player rankings*
 
 ## Features
 
@@ -69,4 +62,11 @@ npm run dev
 - **[Pixabay](https://pixabay.com/)**: For royalty-free images and sounds.
 - **Open Source Libraries**: Various JavaScript and TypeScript utilities for animation, sound, and game logic.
 
-## Deployed on V
+## Deployed on Vercel
+
+Play EchoDots online: [https://echodots.vercel.app/](https://echodots.vercel.app/)
+
+---
+
+&copy; 2025 EchoDots. All rights reserved.
+
