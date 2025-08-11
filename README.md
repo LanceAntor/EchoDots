@@ -62,4 +62,11 @@ npm run dev
 - **[Pixabay](https://pixabay.com/)**: For royalty-free images and sounds.
 - **Open Source Libraries**: Various JavaScript and TypeScript utilities for animation, sound, and game logic.
 
-## Deployed on V
+## Deployed on Vercel
+
+Play Cerberun online: [https://echodots.vercel.app/](https://echodots.vercel.app/)
+
+---
+
+&copy; 2025 EchoDots. All rights reserved.
+
