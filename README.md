@@ -64,7 +64,7 @@ npm run dev
 
 ## Deployed on Vercel
 
-Play Cerberun online: [https://echodots.vercel.app/](https://echodots.vercel.app/)
+Play EchoDots online: [https://echodots.vercel.app/](https://echodots.vercel.app/)
 
 ---
 
